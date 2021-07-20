@@ -1,0 +1,60 @@
+
+lowercaseOutputName: true
+lowercaseOutputLabelNames: true
+rules:
+- pattern: 'Hadoop<service=NameNode, name=NameNodeInfo><>LiveNodes: .*?"capacity":(\d+).*?'
+  name: hadoop_namenode_livenode_info_capacity
+  value: $1
+  isContinueMath: true
+- pattern: 'Hadoop<service=NameNode, name=NameNodeInfo><>LiveNodes: .*?"numBlocks":(\d+).*?'
+  name: hadoop_namenode_livenode_info_numBlocks
+  value: $1
+  isContinueMath: true
+- pattern: 'Hadoop<service=NameNode, name=NameNodeInfo><>LiveNodes: .*?"blockPoolUsed":(\d+).*?'
+  name: hadoop_namenode_livenode_info_blockPoolUsed
+  value: $1
+  isContinueMath: true
+- pattern: 'Hadoop<service=NameNode, name=NameNodeInfo><>LiveNodes: .*?"lastContact":(\d+).*?'
+  name: hadoop_namenode_livenode_info_lastContact
+  value: $1
+  isContinueMath: true
+- pattern: 'Hadoop<service=NameNode, name=NameNodeInfo><>LiveNodes: .*?"blockScheduled":(\d+).*?'
+  name: hadoop_namenode_livenode_info_blockScheduled
+  value: $1
+  isContinueMath: true
+- pattern: 'Hadoop<service=NameNode, name=NameNodeInfo><>LiveNodes: .*?"remaining":(\d+).*?'
+  name: hadoop_namenode_livenode_info_remaining
+  value: $1
+  isContinueMath: true
+- pattern: 'Hadoop<service=NameNode, name=NameNodeInfo><>LiveNodes: .*?"used":(\d+).*?'
+  name: hadoop_namenode_livenode_info_used
+  value: $1
+  isContinueMath: true
+- pattern: 'Hadoop<service=NameNode, name=NameNodeInfo><>LiveNodes: .*?"nonDfsUsedSpace":(\d+).*?'
+  name: hadoop_namenode_livenode_info_nonDfsUsedSpace
+  value: $1
+- pattern: 'Hadoop<service=NameNode, name=NameNodeStatus><>State:.*?active.*?'
+  name: hadoop_namenode_status
+  value: 1
+  help: "NameNodeStatus status, means active and means standby"
+  type: COUNTER
+- pattern: 'Hadoop<service=NameNode, name=NameNodeStatus><>State:.*?standby.*?'
+  name: hadoop_namenode_status
+  value: 0
+  help: "NameNodeStatus status, means active and means standby"
+  type: COUNTER
+- pattern: 'Hadoop<service=NameNode, name=FSNamesystemState><>FSState:.*?Operational.*?'
+  name: hadoop_namenode_fsnamesystem_state
+  value: 1
+  help: "FSNameSystem state, means Operational and means Safemode"
+  type: COUNTER
+- pattern: 'Hadoop<service=NameNode, name=FSNamesystemState><>FSState:.*?Safemode.*?'
+  name: hadoop_namenode_fsnamesystem_state
+  value: 0
+  help: "FSNameSystem state, means Operational and means Safemode"
+  type: COUNTER
+- pattern: 'Hadoop<service=(\w+), name=(\w+)><>(\w+): (\d+)'
+  name: hadoop_$1_$2_$3
+  value: $4
+  attrNameSnakeCase: true
+  help: "Common config, parse from jmx bean: {Hadoop:service=$1, name=$2}.$3"
